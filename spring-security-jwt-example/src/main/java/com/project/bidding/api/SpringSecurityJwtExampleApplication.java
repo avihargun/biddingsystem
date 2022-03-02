@@ -35,6 +35,7 @@ public class SpringSecurityJwtExampleApplication {
 
     public static void main(String[] args) {
     	new File(WelcomeController.uploadDirectory).mkdir();
+    	new File(WelcomeController.uploadDirectoryForCatalog).mkdir();
         SpringApplication.run(SpringSecurityJwtExampleApplication.class, args);
     }
 

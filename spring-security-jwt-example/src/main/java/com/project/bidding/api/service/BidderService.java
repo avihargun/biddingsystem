@@ -17,8 +17,5 @@ public class BidderService {
 	}
 	
 	
-	public void bidderLogin(Bidder bidder)
-	{//left to implement
-	}
 	
 }

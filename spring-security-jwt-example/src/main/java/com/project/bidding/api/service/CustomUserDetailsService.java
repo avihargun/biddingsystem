@@ -5,7 +5,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.project.bidding.api.entity.Bidder;
 import com.project.bidding.api.entity.Seller;
+import com.project.bidding.api.repository.BidderRepository;
 import com.project.bidding.api.repository.SellerRepository;
 
 
@@ -15,10 +19,26 @@ import java.util.ArrayList;
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private SellerRepository repository;
+    
+    @Autowired
+    private BidderRepository bidderRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    	
         Seller seller = repository.findByEmail(email);
-        return new org.springframework.security.core.userdetails.User(seller.getEmail(), seller.getPassword(), new ArrayList<>());
+    
+        if(seller == null)
+        {
+        	Bidder bidder=bidderRepository.findByBidderEmail(email);
+        	
+        
+        	 return new org.springframework.security.core.userdetails.User(bidder.getBidderEmail(), bidder.getBidderPassword(), new ArrayList<>());
+        }
+        else
+        {
+        	 return new org.springframework.security.core.userdetails.User(seller.getEmail(), seller.getPassword(), new ArrayList<>());
+        }
+       
     }
 }

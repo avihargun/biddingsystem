@@ -2,12 +2,15 @@ package com.project.bidding.api.entity;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,7 +30,9 @@ public class Auction {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	private LocalTime startTime;
 	private long duration;
-	private int currBidValue;
+	@OneToMany(targetEntity = Catalog.class , cascade = CascadeType.ALL)
+	@JoinColumn(name="event_id",referencedColumnName = "eventNo")
+	private List<Catalog> items;
 
 	
 	public Auction() {
@@ -35,8 +40,8 @@ public class Auction {
 	}
 
 
-	public Auction(long eventNo, String eventTitle, String description, String category, String imageName, Date startDate,
-			LocalTime startTime, long duration, int currBidValue) {
+	public Auction(long eventNo, String eventTitle, String description, String category, String imageName,
+			Date startDate, LocalTime startTime, long duration, List<Catalog> items) {
 		super();
 		this.eventNo = eventNo;
 		this.eventTitle = eventTitle;
@@ -46,7 +51,7 @@ public class Auction {
 		this.startDate = startDate;
 		this.startTime = startTime;
 		this.duration = duration;
-		this.currBidValue = currBidValue;
+		this.items = items;
 	}
 
 
@@ -90,12 +95,12 @@ public class Auction {
 	}
 
 
-	public String getimageName() {
+	public String getImageName() {
 		return imageName;
 	}
 
 
-	public void setimageName(String imageName) {
+	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
 
@@ -130,14 +135,17 @@ public class Auction {
 	}
 
 
-	public int getCurrBidValue() {
-		return currBidValue;
+	public List<Catalog> getItems() {
+		return items;
 	}
 
 
-	public void setCurrBidValue(int currBidValue) {
-		this.currBidValue = currBidValue;
+	public void setItems(List<Catalog> items) {
+		this.items = items;
 	}
+
+
+	
 
 	
 	 

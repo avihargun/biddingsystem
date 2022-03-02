@@ -11,12 +11,12 @@
 <body>
     <div class="container">
         <div class="main">
-            <h2>Log In for Bidder <b>Work in progress</b></h2>
-            <form id="form_id" method="post" name="myform" action="#">
+            <h2>Log In for Bidder </h2>
+            <form id="form_id" method="post" name="myform" action="http://localhost:9192/authenticate">
                 <label>Email :</label>
-                <input type="email" name="bidderEmail" id="bidderEmail" />
+                <input type="email" name="userName" id="userName" />
                 <label>Password :</label>
-                <input type="password" name="bidderPassword" id="bidderPassword" />
+                <input type="password" name="password" id="password" />
                 <input type="submit" value="Submit">
             </form>
             <!-- <span><b class="note">Note : </b>For this demo use following username and password. <br /><b

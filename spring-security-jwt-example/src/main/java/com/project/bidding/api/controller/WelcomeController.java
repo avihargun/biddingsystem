@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.MultipartConfigElement;
@@ -31,8 +32,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.project.bidding.api.entity.Auction;
 import com.project.bidding.api.entity.AuthRequest;
 import com.project.bidding.api.entity.Bidder;
+import com.project.bidding.api.entity.Catalog;
 import com.project.bidding.api.entity.Seller;
 import com.project.bidding.api.repository.AuctionRepository;
+import com.project.bidding.api.repository.CatalogRepository;
 import com.project.bidding.api.service.BidderService;
 import com.project.bidding.api.service.SellerService;
 import com.project.bidding.api.util.JwtUtil;
@@ -42,6 +45,8 @@ import com.project.bidding.api.util.JwtUtil;
 @CrossOrigin(origins="*")
 public class WelcomeController {
 
+	@Autowired
+	CatalogRepository catalogRepository;
 	@Autowired
 	AuctionRepository auctionRepository;
 	@Autowired
@@ -80,7 +85,7 @@ public class WelcomeController {
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(200000);
+        multipartResolver.setMaxUploadSize(1500000);
         return multipartResolver;
     }
     public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/webapp/auctionimage";
@@ -98,13 +103,98 @@ public class WelcomeController {
 			
 			e.printStackTrace();
 		}
+	
 		
-		
-		auction.setimageName(filename);
+		auction.setImageName(filename);
 		auctionRepository.save(auction);
 		
 		return "Save Data Successfully ! ";
 	}
+    
+    public static String uploadDirectoryForCatalog = System.getProperty("user.dir") + "/src/main/webapp/catalogimage";
+    @RequestMapping(value="/auctionhouse/catalog" ,method = RequestMethod.POST)
+	@ResponseBody
+	public String saveCatalogInfo(@RequestParam("itemName") ArrayList<String> itemName, @RequestParam("itemImage") ArrayList<MultipartFile> file, @RequestParam("itemStartBid") ArrayList<Integer> itemStartBid, @RequestParam("itemDesc") ArrayList<String> itemDesc  ) {
+    	int n=itemName.size();
+    	for (int i = 0; i < n; i++) {
+    		Catalog c=new Catalog();
+    		c.setItemDesc(itemDesc.get(i));
+    		c.setItemName(itemName.get(i));
+    		c.setItemStartBid(itemStartBid.get(i));
+    		MultipartFile f=file.get(i);
+			String filename=f.getOriginalFilename();
+    		Path fileNameAndPath =Paths.get(uploadDirectoryForCatalog,filename);
+			try {
+				Files.write(fileNameAndPath, f.getBytes());
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			
+			c.setItemImage(filename);
+			
+			catalogRepository.save(c);
+    	} 
+    	return "Saved Data in catalog Successfully ! ";
+	}
+    
+    @RequestMapping(value="/auctionhouse/auction" , method=RequestMethod.GET)
+    public String getfullauction() {
+    	
+
+        return "Auction-catalog";
+    }
+    
+    @RequestMapping(value="/auctionhouse/auction" ,method = RequestMethod.POST)
+   	@ResponseBody
+   	public String saveauction(@ModelAttribute Auction auction, @RequestParam("imgName") MultipartFile file1 ,@RequestParam("itemName") ArrayList<String> itemName, @RequestParam("itemImage") ArrayList<MultipartFile> file, @RequestParam("itemStartBid") ArrayList<Integer> itemStartBid, @RequestParam("itemDesc") ArrayList<String> itemDesc) {
+   		
+
+   		String filename1=file1.getOriginalFilename();
+   		Path fileNameAndPath1 =Paths.get(uploadDirectory,filename1);
+   		
+   		try {
+   			Files.write(fileNameAndPath1, file1.getBytes());
+   		} catch (IOException e) {
+   			
+   			e.printStackTrace();
+   		}
+   	
+   		auction.setImageName(filename1);
+   		
+//   		-----------------------------------------------------------------------------------------------------------------
+   		
+   		ArrayList<Catalog> catlist=new ArrayList<>();
+   		int n=itemName.size();
+    	for (int i = 0; i < n; i++) {
+    		Catalog c=new Catalog();
+    		c.setItemDesc(itemDesc.get(i));
+    		c.setItemName(itemName.get(i));
+    		c.setItemStartBid(itemStartBid.get(i));
+    		MultipartFile f=file.get(i);
+			String filename=f.getOriginalFilename();
+    		Path fileNameAndPath =Paths.get(uploadDirectoryForCatalog,filename);
+			try {
+				Files.write(fileNameAndPath, f.getBytes());
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+			
+			c.setItemImage(filename);
+			
+			catlist.add(c);
+			//catalogRepository.save(c);
+    	} 
+   		
+    	auction.setItems(catlist);
+   		
+   		
+   		
+   		auctionRepository.save(auction);
+   		
+   		return "Save Data Successfully ! ";
+   	}
     
     @RequestMapping(value=  "/authenticate", method=RequestMethod.POST)
     public String generateToken(@ModelAttribute AuthRequest authRequest, HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -116,6 +206,8 @@ public class WelcomeController {
             );
         } catch (Exception ex) {
             throw new Exception("inavalid username/password");
+            
+            
         }
        
         System.out.println(jwtUtil.generateToken(authRequest.getUserName()));
@@ -129,8 +221,12 @@ public class WelcomeController {
       
     	
     }
+    @RequestMapping(value="/auctionhouse/catalog" , method=RequestMethod.GET)
+    public String navigateToCatalogAfterAuctioneerSignup() {  
+    	return "auctionhouse-catalog"; 
+    }
     
-    
+  
     /* ------------------------------ Below code is for bidder  ------------------------------ */
     
     
