@@ -17,4 +17,9 @@ public class SellerService {
 		sellerRepository.save(seller);
 	
 	}
+	
+	public boolean checkIfSellerEmailIdAlreadyExistInTheDatabase(Seller seller) {
+		if(sellerRepository.findByEmail(seller.getEmail())!=null) return true;
+		return false;
+	}
 }

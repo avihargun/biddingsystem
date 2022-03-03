@@ -17,9 +17,9 @@
                 <input type="email" name="userName" id="userName" />
                 <label>Password :</label>
                 <input type="password" name="password" id="password" />
-                <input type="submit" value="Submit">
+                <button value="Submit" class="button">Login</button>
             </form>
-            <!-- <span><b class="note">Note : </b>For this demo use following username and password. <br /><b
+            <!-- <span><b class="note">Note : </b>For this demo use following ussername and password. <br /><b
                     class="valid">User Name : Formget<br />Password : formget#123</b></span> -->
         </div>
     </div>
