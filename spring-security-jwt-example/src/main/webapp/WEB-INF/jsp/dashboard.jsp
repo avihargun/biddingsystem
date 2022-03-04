@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,10 +69,10 @@
       <hr>
       <div id="orange"><span class="fa fa-minus"></span></div>
       <form>
-          <div class="form-group"> <input type="checkbox" id="artisan"> <label for="artisan">Jewellery</label> </div>
-          <div class="form-group"> <input type="checkbox" id="breakfast"> <label for="breakfast">Vehicles</label> </div>
-          <div class="form-group"> <input type="checkbox" id="healthy"> <label for="healthy">Utensils</label> </div>
-          <button class="btn btn-warning" type="submit" >search results</button>
+        <c:forEach var="category" items="${categories}">
+          <div class="form-group"> <input type="checkbox" name="checkbox" value="${category.categoryName}"> <label for="${category.categoryName}">${category.categoryName}</label> </div>
+        </c:forEach>
+        <button class="btn btn-warning" type="submit" >search results</button>
       </form>
   </div>
   <!-- <div class="py-2 border-bottom ml-3">

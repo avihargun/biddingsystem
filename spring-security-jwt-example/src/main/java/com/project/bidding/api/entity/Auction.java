@@ -1,5 +1,6 @@
 package com.project.bidding.api.entity;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Auction {
 	private String imageName;
 //	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date startDate;
+	private LocalDate startDate;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	private LocalTime startTime;
 	private long duration;
@@ -41,7 +42,7 @@ public class Auction {
 
 
 	public Auction(long eventNo, String eventTitle, String description, String category, String imageName,
-			Date startDate, LocalTime startTime, long duration, List<Catalog> items) {
+			LocalDate startDate, LocalTime startTime, long duration, List<Catalog> items) {
 		super();
 		this.eventNo = eventNo;
 		this.eventTitle = eventTitle;
@@ -105,12 +106,12 @@ public class Auction {
 	}
 
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 

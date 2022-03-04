@@ -70,7 +70,7 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-<<<<<<< HEAD
+
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.3</version>

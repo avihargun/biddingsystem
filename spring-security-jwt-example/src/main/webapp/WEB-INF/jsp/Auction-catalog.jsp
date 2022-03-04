@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!doctype html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     <html lang="en">
@@ -34,8 +35,8 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputEmail4">Email</label>
-                            <input type="text" class="form-control" name="eventTitle" id="eventTitle"
+                            <label for="inputEmail4">Event Name</label>
+                            <input type="text" class="form-control" name="eventTitle" id="eventTitle" 
                                 placeholder="EventTitle" required>
                         </div>
                         <div class="form-group col-md-6">
@@ -71,7 +72,11 @@
                             <label for="inputState">Catagory</label>
                             <select id="category" name="category" class="form-control" required>
                                 <option selected>Choose...</option>
-                                <option>Arts and Antiques</option>
+                                <c:forEach var="category" items="${categories}">
+                                    <option>${category.categoryName}</option>
+                                </c:forEach>
+                                
+                                
                                 <option>Jwellery</option>
                                 <option>Vehicales </option>
                             </select>

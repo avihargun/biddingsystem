@@ -37,6 +37,7 @@ import com.project.bidding.api.entity.Catalog;
 import com.project.bidding.api.entity.Seller;
 import com.project.bidding.api.repository.AuctionRepository;
 import com.project.bidding.api.repository.CatalogRepository;
+import com.project.bidding.api.repository.CategoryRepository;
 import com.project.bidding.api.service.BidderService;
 import com.project.bidding.api.service.SellerService;
 import com.project.bidding.api.util.JwtUtil;
@@ -46,6 +47,8 @@ import com.project.bidding.api.util.JwtUtil;
 @CrossOrigin(origins="*")
 public class WelcomeController {
 
+	@Autowired
+	CategoryRepository categoryRepository;
 	@Autowired
 	CatalogRepository catalogRepository;
 	@Autowired
@@ -162,7 +165,8 @@ public class WelcomeController {
 
 
 	@RequestMapping(value="/auctionhouse/auction" , method=RequestMethod.GET)
-	public String getfullauction() {
+	public String getfullauction(Model model) {
+		model.addAttribute("categories", categoryRepository.findAll());
 		return "Auction-catalog";
 	}
 
@@ -284,6 +288,15 @@ public class WelcomeController {
     @RequestMapping(value="/bidder/dashboard" , method=RequestMethod.GET)
     public String bidderdashboard(Model model) {
     	model.addAttribute("auctions", auctionRepository.findAll());
+    	model.addAttribute("categories", categoryRepository.findAll());
+        return "dashboard";
+    }
+    
+    @RequestMapping(value="/bidder/dashboard/" , method=RequestMethod.POST)
+    public String postitembycategories(@RequestParam("checkbox") ArrayList<String> selectedCategory, Model model) {
+    	model.addAttribute("auctions", auctionRepository.findAllByCategoryIn(selectedCategory));
+    	model.addAttribute("categories", categoryRepository.findAll());
+    	
         return "dashboard";
     }
     
