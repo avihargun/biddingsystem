@@ -19,6 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -247,4 +248,10 @@ public class WelcomeController {
         return "bidder-login";
     }
 
+    @RequestMapping(value="/bidder/dashboard" , method=RequestMethod.GET)
+    public String bidderdashboard(Model model) {
+    	model.addAttribute("auctions", auctionRepository.findAll());
+        return "dashboard";
+    }
+    
 }
