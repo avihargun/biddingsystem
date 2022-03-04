@@ -9,6 +9,7 @@
 
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
 
     <body>
@@ -18,7 +19,7 @@
 
             <!-- <svg xmlns="http://www.w3.org/2000/svg" id="addRow" style="size: 1cm;" type="button" viewBox="0 0 24 24"><path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Zm4-9H13V8a1,1,0,0,0-2,0v3H8a1,1,0,0,0,0,2h3v3a1,1,0,0,0,2,0V13h3a1,1,0,0,0,0-2Z"/></svg> -->
             <!-- <form method="post" name="catalog" enctype="multipart/form-data" id="catalogForm" action="/auctionhouse/catalog" > -->
-            <form method="POST" enctype="multipart/form-data" action="/auctionhouse/auction">
+            <form method="POST" id="auctionform" name="auctionform" enctype="multipart/form-data" action="/auctionhouse/auction">
                 <div class="container">
                     <div class="jumbotron text-center bg-success text-white">
                         <h1>Auction details</h1>
@@ -134,7 +135,9 @@
                             </div>
 
                             <div id="newRow"></div>
-                            <button type="submit" class="btn btn-success">Save all the catalog item details</button>
+                            <button type="button" onclick="auctionCreated()" class="btn btn-success">Save all the
+                                catalog item details</button>
+                                <span id="message" style="color:red"></span>
                             <!-- the new row div above will replace the html tags with the script below -->
                         </div>
                     </div>
@@ -177,6 +180,38 @@
             $(document).on('click', '#removeRow', function () {
                 $(this).closest('#inputFormRow').remove();
             });
+
+            function auctionCreated() {
+                let myform = document.getElementById("auctionform");
+                let fd = new FormData(myform);
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:9192/auctionhouse/auction",
+                    data: fd,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        if (result == "failure"){ 
+                            document.getElementById("message").innerHTML = "Sorry auction could not be created";
+                            document.getElementById("auctionform").reset();
+                    }
+
+                        else if (result == "success") {
+                            swal({
+                                title: "Auction successfully created",
+                                text: "Auction will be live in few minutes",
+                                icon: "success",
+                            }).then(function () {
+                                window.location.href = "http://localhost:9192/auctionhouse/auction";
+                            });
+                        }
+                        // console.log(result);
+                    }
+                });
+            }
+
+
         </script>
     </body>
 
