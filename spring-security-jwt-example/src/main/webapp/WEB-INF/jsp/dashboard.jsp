@@ -68,9 +68,9 @@
       <h6 class="font-weight-bold">Categories</h6>
       <hr>
       <div id="orange"><span class="fa fa-minus"></span></div>
-      <form>
+      <form action="/bidder/dashboard/" method="POST">
         <c:forEach var="category" items="${categories}">
-          <div class="form-group"> <input type="checkbox" name="checkbox" value="${category.categoryName}"> <label for="${category.categoryName}">${category.categoryName}</label> </div>
+          <div class="form-group"> <input type="checkbox"  name="checkbox" value="${category.categoryName}"> <label for="${category.categoryName}">${category.categoryName}</label> </div>
         </c:forEach>
         <button class="btn btn-warning" type="submit" >search results</button>
       </form>
@@ -226,5 +226,21 @@
           </div> -->
   </div>
 </section>
+<script> 
+  $("input[name='checkbox']").click(function(e){ 
+  if (e.target.checked) { 
+  localStorage.checked = true; 
+  } else { 
+  localStorage.checked = false; 
+  } 
+  }) 
+   
+  $( document ).ready(function() { 
+    <c:forEach var="category" items="${categories}">
+      document.querySelector("input[name='checkbox']").checked = localStorage.checked 
+  </c:forEach>
+   
+  }); 
+  </script> 
 </body>
 </html>

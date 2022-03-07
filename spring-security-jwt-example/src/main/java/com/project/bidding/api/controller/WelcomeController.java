@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Cookie;
@@ -294,7 +296,16 @@ public class WelcomeController {
     
     @RequestMapping(value="/bidder/dashboard/" , method=RequestMethod.POST)
     public String postitembycategories(@RequestParam("checkbox") ArrayList<String> selectedCategory, Model model) {
-    	model.addAttribute("auctions", auctionRepository.findAllByCategoryIn(selectedCategory));
+    	
+    	ArrayList<Auction> result =new ArrayList<>();
+    
+    	for(int i=0;i<selectedCategory.size();i++)
+    	{
+    		result.addAll( auctionRepository.findAllByCategory(selectedCategory.get(i)));
+    	}
+    	model.addAttribute("auctions", result);
+    	
+    //	System.out.println(auctionRepository.findAllByCategoryIn(s));
     	model.addAttribute("categories", categoryRepository.findAll());
     	
         return "dashboard";
