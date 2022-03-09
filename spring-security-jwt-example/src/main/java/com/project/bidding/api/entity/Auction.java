@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,15 +35,20 @@ public class Auction {
 	@OneToMany(targetEntity = Catalog.class , cascade = CascadeType.ALL)
 	@JoinColumn(name="event_id",referencedColumnName = "eventNo")
 	private List<Catalog> items;
-
+//	@OneToOne(targetEntity=Seller.class)
+//	@JoinColumn(name="seller_id",referencedColumnName="email")
+	private String sellerId;
+	
+	
 	
 	public Auction() {
 		super();
 	}
 
 
+
 	public Auction(long eventNo, String eventTitle, String description, String category, String imageName,
-			LocalDate startDate, LocalTime startTime, long duration, List<Catalog> items) {
+			LocalDate startDate, LocalTime startTime, long duration, List<Catalog> items, String sellerId) {
 		super();
 		this.eventNo = eventNo;
 		this.eventTitle = eventTitle;
@@ -53,7 +59,9 @@ public class Auction {
 		this.startTime = startTime;
 		this.duration = duration;
 		this.items = items;
+		this.sellerId = sellerId;
 	}
+
 
 
 	public long getEventNo() {
@@ -61,9 +69,11 @@ public class Auction {
 	}
 
 
+
 	public void setEventNo(long eventNo) {
 		this.eventNo = eventNo;
 	}
+
 
 
 	public String getEventTitle() {
@@ -71,9 +81,11 @@ public class Auction {
 	}
 
 
+
 	public void setEventTitle(String eventTitle) {
 		this.eventTitle = eventTitle;
 	}
+
 
 
 	public String getDescription() {
@@ -81,9 +93,11 @@ public class Auction {
 	}
 
 
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 
 
 	public String getCategory() {
@@ -91,9 +105,11 @@ public class Auction {
 	}
 
 
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 
 
 	public String getImageName() {
@@ -101,9 +117,11 @@ public class Auction {
 	}
 
 
+
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
+
 
 
 	public LocalDate getStartDate() {
@@ -111,9 +129,11 @@ public class Auction {
 	}
 
 
+
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
+
 
 
 	public LocalTime getStartTime() {
@@ -121,9 +141,11 @@ public class Auction {
 	}
 
 
+
 	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
+
 
 
 	public long getDuration() {
@@ -131,9 +153,11 @@ public class Auction {
 	}
 
 
+
 	public void setDuration(long duration) {
 		this.duration = duration;
 	}
+
 
 
 	public List<Catalog> getItems() {
@@ -141,9 +165,25 @@ public class Auction {
 	}
 
 
+
 	public void setItems(List<Catalog> items) {
 		this.items = items;
 	}
+
+
+
+	public String getSellerId() {
+		return sellerId;
+	}
+
+
+
+	public void setSellerId(String sellerId) {
+		this.sellerId = sellerId;
+	}
+
+	
+	
 
 
 	

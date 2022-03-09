@@ -98,7 +98,7 @@
 <!-- products section -->
 <section id="products">
   <div class="container">
-      <!-- <div class="d-flex flex-row">
+      <!-- <div class="d-flex flex-row"> 
           <div class="text-muted m-2" id="res">Showing 44 results</div>
           <div class="ml-auto mr-lg-4">
               <div id="sorting" class="border rounded p-1 m-1"> <span class="text-muted">Sort by</span> <select name="sort" id="sort">
@@ -119,13 +119,14 @@
               <h5 class="card-title">${auction.eventNo}.${auction.eventTitle}</h5>
               <p class="card-text">${auction.description} This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <p class="card-text"><small class="text-muted">Starts at ${auction.startTime} ${auction.startDate}</small></p>
+              <a href="/bidder/event/${auction.eventNo}" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>
         </div>
       </div>
     </c:forEach> 
 
-    <div class="card mb-3" style="max-width: fit-content;">
+    <!-- <div class="card mb-3" style="max-width: fit-content;">
         <div class="row no-gutters">
           <div class="col-md-4">
             <img src="https://image.shutterstock.com/image-vector/graph-paper-coordinate-grid-squared-600w-1917481553.jpg" class="card-img" alt="...">
@@ -167,7 +168,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
           <!-- <div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1">
               <div class="card"> <img class="card-img-top" src="https://images.pexels.com/photos/3085146/pexels-photo-3085146.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
                   <div class="card-body">
@@ -226,7 +227,7 @@
           </div> -->
   </div>
 </section>
-<script> 
+<!-- <script> 
   $("input[name='checkbox']").click(function(e){ 
   if (e.target.checked) { 
   localStorage.checked = true; 
@@ -241,6 +242,6 @@
   </c:forEach>
    
   }); 
-  </script> 
+  </script>  -->
 </body>
 </html>

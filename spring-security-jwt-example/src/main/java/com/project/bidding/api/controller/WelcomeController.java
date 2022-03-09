@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -107,7 +108,7 @@ public class WelcomeController {
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver() {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(1500000);
+		multipartResolver.setMaxUploadSize(2000000);
 		return multipartResolver;
 	}
 	
@@ -176,7 +177,7 @@ public class WelcomeController {
 
 	@RequestMapping(value="/auctionhouse/auction" ,method = RequestMethod.POST)
 	@ResponseBody
-	public String saveauction(@ModelAttribute Auction auction, @RequestParam("imgName") MultipartFile file1 ,@RequestParam("itemName") ArrayList<String> itemName, @RequestParam("itemImage") ArrayList<MultipartFile> file, @RequestParam("itemStartBid") ArrayList<Integer> itemStartBid, @RequestParam("itemDesc") ArrayList<String> itemDesc) {
+	public String saveauction(HttpServletRequest httpServletRequest,@ModelAttribute Auction auction, @RequestParam("imgName") MultipartFile file1 ,@RequestParam("itemName") ArrayList<String> itemName, @RequestParam("itemImage") ArrayList<MultipartFile> file, @RequestParam("itemStartBid") ArrayList<Integer> itemStartBid, @RequestParam("itemDesc") ArrayList<String> itemDesc) {
 
 		try {
 			String filename1=file1.getOriginalFilename();
@@ -190,6 +191,17 @@ public class WelcomeController {
 			}
 
 			auction.setImageName(filename1);
+			String authorizationHeader = null;
+	    	 Cookie[] cookies=httpServletRequest.getCookies();
+			
+	    	 for(Cookie c :cookies )
+	    	 {
+	    		 if(c.getName().equals("token"))
+	    		 {
+	    			 authorizationHeader=c.getValue();
+	    		 }
+	    	 }
+			auction.setSellerId(jwtUtil.extractUsername(authorizationHeader));
 
 			//   		-----------------------------------------------------------------------------------------------------------------
 
@@ -226,7 +238,9 @@ public class WelcomeController {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return "failure";
+			
 		}
 	}
 	
@@ -237,6 +251,7 @@ public class WelcomeController {
 	public String generateToken(@ModelAttribute AuthRequest authRequest, HttpServletRequest request,HttpServletResponse response) throws Exception {
 
 		System.out.println(authRequest.getUserName());
+		System.out.println(authRequest.getPassword());
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
@@ -297,6 +312,10 @@ public class WelcomeController {
     @RequestMapping(value="/bidder/dashboard/" , method=RequestMethod.POST)
     public String postitembycategories(@RequestParam("checkbox") ArrayList<String> selectedCategory, Model model) {
     	
+    	for(String a: selectedCategory)
+    	{
+    		System.out.println(a);
+    	}
     	ArrayList<Auction> result =new ArrayList<>();
     
     	for(int i=0;i<selectedCategory.size();i++)
@@ -304,11 +323,27 @@ public class WelcomeController {
     		result.addAll( auctionRepository.findAllByCategory(selectedCategory.get(i)));
     	}
     	model.addAttribute("auctions", result);
+    	System.out.println(result);
     	
     //	System.out.println(auctionRepository.findAllByCategoryIn(s));
     	model.addAttribute("categories", categoryRepository.findAll());
     	
         return "dashboard";
+    }
+    
+
+    @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
+    public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
+    	
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	return "event";
+    }
+    
+    @RequestMapping(value="/bidder/event/" , method=RequestMethod.POST)
+    public String bidderEventPagePost() {
+    return "event";
     }
     
 }
