@@ -81,8 +81,8 @@ public class WelcomeController {
 	public String signup() {
 		return "auctioneer-signup";
 	}
-
-	
+                                                                        
+	                                                                                                             
     @RequestMapping(value="/auctionhouse/signup" , method=RequestMethod.POST)
     @ResponseBody
     public String signUpAsAuctioneer(@ModelAttribute Seller seller) {

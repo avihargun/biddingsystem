@@ -23,10 +23,9 @@ public class Category {
 		super();
 		this.categoryNo = categoryNo;
 		this.categoryName = categoryName;
-	}
-	
+	}       
 	public long getCategoryNo() {
-		return categoryNo;
+		return categoryNo;         
 	}
 	public void setCategoryNo(long categoryNo) {
 		this.categoryNo = categoryNo;
