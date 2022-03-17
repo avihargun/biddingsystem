@@ -96,6 +96,24 @@ public class WelcomeController {
     }
     
 
+    
+    
+    
+    @RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.GET)
+	public String auctioneerDashboardGet() {
+		return "auctioneer-dashboard";
+	}
+
+	@RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.POST)
+	public String auctioneerDashboardPost() {
+
+//		bidderService.bidderSignUp(bidder);
+		return "auctioneer-dashboard";
+	}
+    
+    
+    
+    
 	
 	
 	@RequestMapping(value="/auctionhouse/addauction" , method=RequestMethod.GET)
