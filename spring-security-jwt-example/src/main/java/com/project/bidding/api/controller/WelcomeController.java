@@ -41,6 +41,7 @@ import com.project.bidding.api.entity.Seller;
 import com.project.bidding.api.repository.AuctionRepository;
 import com.project.bidding.api.repository.CatalogRepository;
 import com.project.bidding.api.repository.CategoryRepository;
+import com.project.bidding.api.repository.SellerRepository;
 import com.project.bidding.api.service.BidderService;
 import com.project.bidding.api.service.SellerService;
 import com.project.bidding.api.util.JwtUtil;
@@ -58,6 +59,8 @@ public class WelcomeController {
 	AuctionRepository auctionRepository;
 	@Autowired
 	private SellerService sellerService;
+	@Autowired
+	private SellerRepository sellerRepository;
 	@Autowired
 	private BidderService bidderService;
 	@Autowired
@@ -96,6 +99,59 @@ public class WelcomeController {
     }
     
 
+    
+    
+    
+    @RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.GET)
+	public String auctioneerDashboardGet(Model model) {
+    	
+    	
+    	model.addAttribute("auctions", auctionRepository.findAll());
+//    	model.addAttribute("categories", categoryRepository.findAll());
+    	
+		return "auctioneer-dashboard";
+		/*
+		 
+		      @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
+    public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
+    	
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	return "event";
+    }
+    
+    @RequestMapping(value="/bidder/event/" , method=RequestMethod.POST)
+    public String bidderEventPagePost() {
+    return "event";
+    }
+		  
+		  */
+	}
+
+	@RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.POST)
+	public String auctioneerDashboardPost() {
+
+//		bidderService.bidderSignUp(bidder);
+		return "auctioneer-dashboard";
+	}
+    
+    
+    @RequestMapping(value="/auctionhouse/event/{eventno}" , method=RequestMethod.GET)
+    public String auctioneerEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
+    	
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));//items will have the list of items so will hagve to implement foreeach lopp in jsp page
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	return "auctioneer-event";
+    }
+    
+    @RequestMapping(value="/auctionhouse/event/" , method=RequestMethod.POST)
+    public String auctioneerEventPagePost() {
+    return "auctioneer-event";
+    }
+    
+    
 	
 	
 	@RequestMapping(value="/auctionhouse/addauction" , method=RequestMethod.GET)
@@ -336,6 +392,14 @@ public class WelcomeController {
     public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
     	
     	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
+    	
+    	model.addAttribute("eventNumber", eventNo);
+
+    	model.addAttribute("auctionHouseName", sellerRepository.findByEmail(((Auction) auctionRepository.findByeventNo(eventNo)). getSellerId()).getHouseName());
+//    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	
+    	
+    	
     	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
     	model.addAttribute("catalog", a.getItems());
     	return "event";
@@ -347,6 +411,7 @@ public class WelcomeController {
     }
     
     
+<<<<<<< HEAD
     /*
         @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
     public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
@@ -365,5 +430,25 @@ public class WelcomeController {
     
     
     
+=======
+    //------------------live auction ------------
+    @RequestMapping(value="/bidder/live-auction/{eventNo}" , method=RequestMethod.GET)
+    public String liveAuctionPost(@PathVariable("eventNo") long eventNo, Model model) {
+
+    	
+    	
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));//items will have the list of items so will hagve to implement foreeach lopp in jsp page
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	
+    	
+    	return "bidder-live-auction";
+    }
+
+    @RequestMapping(value="/bidder/live-auction" , method=RequestMethod.POST)
+    public String liveAuctionGet(Model model) {
+    	return "bidder-live-auction";
+    }
+>>>>>>> b1466d8cc7823aab0afc3c90dee0cd1a59a3084d
     
 }
