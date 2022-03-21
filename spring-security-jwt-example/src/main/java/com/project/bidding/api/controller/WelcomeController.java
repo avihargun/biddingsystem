@@ -346,4 +346,24 @@ public class WelcomeController {
     return "event";
     }
     
+    
+    /*
+        @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
+    public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
+
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	return "event";
+    }
+
+    @RequestMapping(value="/bidder/event/" , method=RequestMethod.POST)
+    public String bidderEventPagePost() {
+    return "event";
+    }
+     */
+    
+    
+    
+    
 }

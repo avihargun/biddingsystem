@@ -19,9 +19,9 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/bid/returnbid', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
+            showGreeting(JSON.parse(greeting.body));
         });
-    });
+    });         
 }
 
 function disconnect() {
@@ -34,7 +34,7 @@ function disconnect() {
 
 function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'amount': $("#name").val()}));
-}
+}         
 
 function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message.rbid + "</td></tr>");

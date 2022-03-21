@@ -35,7 +35,7 @@
             </form>
         </div>
     </div>
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-md-12">
             <table id="conversation" class="table table-striped">
                 <thead>
@@ -48,6 +48,6 @@
             </table>
         </div> 
     </div>
-</div> -->
+</div>
 </body>
 </html>
