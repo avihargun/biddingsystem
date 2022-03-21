@@ -151,11 +151,13 @@ in example with RGB opacity to  make it stand out a bit more.   */
         </h2>
         <!-- <div class="title h1 text-center">Proxibid</div> -->
         <!-- Card Start -->
+        <c:forEach var="auction" items="${auctions}">
+
         <div class="card">
-            <img src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg" style=" border: 10px solid; " class="card-img-top" />
+            <img src="/auctionimage/${auction.imageName}" style=" border: 10px solid; " class="card-img-top" />
             <div class="card-body">
-              <h5 class="card-title">
-               ${items.eventTitle}</h5>
+              <!-- <h5 class="card-title">
+               ${auction.eventTitle}</h5> -->
               
 
               <p class="card-text">
@@ -166,18 +168,22 @@ in example with RGB opacity to  make it stand out a bit more.   */
                         <div class="col-sm-6">
                           <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title"><b>Event title:</b>Event title</h5>
-                              <p class="card-text"><b>Description:</b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut.</p>                        
+                              <h5 class="card-title"><b>Event title:</b>${auction.eventTitle}</h5>
+                              <p class="card-text"><b>Description:</b>${auction.description}</p>
+                              <p class="card-text"><b>Category:</b>${auction.category}</p>                        
+                       
                             </div>
                           </div>
                         </div>
                         <div class="col-sm-6">
                           <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title">Time</h5>
-                              <p class="card-text"><b>Event starts at:</b>01/02/2022</p>
-                              <p class="card-text"><b>Time:</b>9:00 </p>
-                            <a href="#" class="btn btn-danger btn-block">Enter this event</a>
+                              <h5 class="card-title">Timings of the event</h5>
+                              <p class="card-text"><b>Event starts at:</b>${auction.startDate}</p>
+                              <p class="card-text"><b>Time:</b>${auction.startTime}</p>
+                              <p class="card-text"><b>Duration:</b>${auction.duration}</p>                        
+
+                            <a href="/auctionhouse/event/${auction.eventNo}" class="btn btn-danger btn-block">Enter this event</a>
                             </div>
                           </div>
                         </div>
@@ -188,6 +194,8 @@ in example with RGB opacity to  make it stand out a bit more.   */
 
             </div>
           </div>
+        </c:forEach>
+
         <!-- End of card -->
           <br>
     

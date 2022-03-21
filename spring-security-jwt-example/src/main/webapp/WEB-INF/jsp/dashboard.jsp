@@ -112,14 +112,14 @@
       <div class="card mb-3" style="max-width: fit-content;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="https://image.shutterstock.com/image-vector/graph-paper-coordinate-grid-squared-600w-1917481553.jpg" class="card-img" alt="...">
+            <img src="/auctionimage/${auction.imageName}" class="card-img" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">${auction.eventNo}.${auction.eventTitle}</h5>
               <p class="card-text">${auction.description} This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <p class="card-text"><small class="text-muted">Starts at ${auction.startTime} ${auction.startDate}</small></p>
-              <a href="/bidder/event/${auction.eventNo}" class="btn btn-primary">Go somewhere</a>
+              <a href="/bidder/event/${auction.eventNo}" class="btn btn-primary">Go to this event</a>
             </div>
           </div>
         </div>
