@@ -11,6 +11,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/css/event.css" />
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/auctioneerbid.js"></script>
 </head>
 <body>
 
@@ -70,7 +74,7 @@
                         
             
                         
-                                                <button class="btn btn-success" id="login">Start Bid</button>
+                                                <button class="btn btn-success" id="bidchange">Start Bid</button>
                         
                                             
                         

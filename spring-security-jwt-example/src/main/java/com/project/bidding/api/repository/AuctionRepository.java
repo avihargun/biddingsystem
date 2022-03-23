@@ -14,7 +14,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{
 
 	ArrayList<Auction> findAllByCategory(String selectedCategory);
 
-	Object findByeventNo(long eventNo);
+	Auction findByeventNo(long eventNo);
 
 	
 

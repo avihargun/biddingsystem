@@ -124,7 +124,7 @@
           </div>
         </div>
       </div>
-    </c:forEach> 
+    </c:forEach>  
 
     <!-- <div class="card mb-3" style="max-width: fit-content;">
         <div class="row no-gutters">

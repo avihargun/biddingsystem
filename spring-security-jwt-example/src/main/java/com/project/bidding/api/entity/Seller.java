@@ -9,7 +9,7 @@ import javax.persistence.Table;
 public class Seller {
 	
 	@Id
-	private String email;
+	private String  email;
 	private String houseName;
 	private String address;
 	private String contact;
@@ -71,3 +71,4 @@ public class Seller {
 	
 
 }
+                                                                             

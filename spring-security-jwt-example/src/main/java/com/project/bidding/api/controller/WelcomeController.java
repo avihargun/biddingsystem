@@ -101,57 +101,6 @@ public class WelcomeController {
 
     
     
-    
-    @RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.GET)
-	public String auctioneerDashboardGet(Model model) {
-    	
-    	
-    	model.addAttribute("auctions", auctionRepository.findAll());
-//    	model.addAttribute("categories", categoryRepository.findAll());
-    	
-		return "auctioneer-dashboard";
-		/*
-		 
-		      @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
-    public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
-    	
-    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
-    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
-    	model.addAttribute("catalog", a.getItems());
-    	return "event";
-    }
-    
-    @RequestMapping(value="/bidder/event/" , method=RequestMethod.POST)
-    public String bidderEventPagePost() {
-    return "event";
-    }
-		  
-		  */
-	}
-
-	@RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.POST)
-	public String auctioneerDashboardPost() {
-
-//		bidderService.bidderSignUp(bidder);
-		return "auctioneer-dashboard";
-	}
-    
-    
-    @RequestMapping(value="/auctionhouse/event/{eventno}" , method=RequestMethod.GET)
-    public String auctioneerEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
-    	
-    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));//items will have the list of items so will hagve to implement foreeach lopp in jsp page
-    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
-    	model.addAttribute("catalog", a.getItems());
-    	return "auctioneer-event";
-    }
-    
-    @RequestMapping(value="/auctionhouse/event/" , method=RequestMethod.POST)
-    public String auctioneerEventPagePost() {
-    return "auctioneer-event";
-    }
-    
-    
 	
 	
 	@RequestMapping(value="/auctionhouse/addauction" , method=RequestMethod.GET)
@@ -337,6 +286,44 @@ public class WelcomeController {
 		return "auctionhouse-catalog"; 
 	}
 
+	  
+    @RequestMapping(value="/auctionhouse/dashboard" , method=RequestMethod.GET)
+	public String auctioneerDashboardGet(Model model) {
+    	
+    	
+    	model.addAttribute("auctions", auctionRepository.findAll());
+//    	model.addAttribute("categories", categoryRepository.findAll());
+    	
+		return "auctioneer-dashboard";
+		/*
+		 
+		      @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
+    public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
+    	
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	return "event";
+    }
+    
+    @RequestMapping(value="/bidder/event/" , method=RequestMethod.POST)
+    public String bidderEventPagePost() {
+    return "event";
+    }
+		  
+		  */
+	}
+
+
+    
+    @RequestMapping(value="/auctionhouse/event/{eventno}" , method=RequestMethod.GET)
+    public String auctioneerEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
+    	
+    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));//items will have the list of items so will hagve to implement foreeach lopp in jsp page
+    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("catalog", a.getItems());
+    	return "auctioneer-event";
+    }
 
 	/* ------------------------------ Below code is for bidder  ------------------------------ */
 
@@ -391,11 +378,12 @@ public class WelcomeController {
     @RequestMapping(value="/bidder/event/{eventno}" , method=RequestMethod.GET)
     public String bidderEventPageGet(@PathVariable("eventno") long eventNo, Model model) {
     	
-    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));
+    	Auction current_auction= auctionRepository.findByeventNo(eventNo);
+    	model.addAttribute("items", current_auction);
     	
     	model.addAttribute("eventNumber", eventNo);
 
-    	model.addAttribute("auctionHouseName", sellerRepository.findByEmail(((Auction) auctionRepository.findByeventNo(eventNo)). getSellerId()).getHouseName());
+    	model.addAttribute("auctionHouseName", sellerRepository.findByEmail(current_auction. getSellerId()).getHouseName());
 //    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
     	
     	
@@ -411,24 +399,7 @@ public class WelcomeController {
     }
     
     
-
-    //------------------live auction ------------
-    @RequestMapping(value="/bidder/live-auction/{eventNo}" , method=RequestMethod.GET)
-    public String liveAuctionPost(@PathVariable("eventNo") long eventNo, Model model) {
-
-    	
-    	
-    	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));//items will have the list of items so will hagve to implement foreeach lopp in jsp page
-    	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
-    	model.addAttribute("catalog", a.getItems());
-    	
-    	
-    	return "bidder-live-auction";
-    }
-
-    @RequestMapping(value="/bidder/live-auction" , method=RequestMethod.POST)
-    public String liveAuctionGet(Model model) {
-    	return "bidder-live-auction";
-    }
+   
+   
     
 }
