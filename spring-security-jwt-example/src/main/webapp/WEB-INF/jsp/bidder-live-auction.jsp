@@ -67,6 +67,13 @@
                         
                                     <div class="offset-md-12">
                         
+                                        <div>
+
+                                            <!-- amount bid by this person  -->
+
+                                            <small id="${c.itemId}c" class="text-muted"></small>
+
+                                        </div>
                         
                                         <div class="input-group">
                         
@@ -74,7 +81,7 @@
                         
             
                         
-                                                <button class="btn btn-success" id="bidchange">Start Bid</button>
+                                                <button class="btn btn-success" id="${c.itemId}b" onClick="highbid(`${c.itemId}`,`${eventNo}`,this.html)">Start Bid</button>
                         
                                             
                         

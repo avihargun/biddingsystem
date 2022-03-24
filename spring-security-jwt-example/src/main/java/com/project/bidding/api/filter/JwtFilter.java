@@ -32,13 +32,17 @@ public class JwtFilter extends OncePerRequestFilter {
 
     	 String authorizationHeader = null;
     	 Cookie[] cookies = httpServletRequest.getCookies();
-    	 for(Cookie c :cookies )
+    	 if(cookies!=null)
     	 {
-    		 if(c.getName().equals("token"))
-    		 {
-    			 authorizationHeader=c.getValue();
-    		 }
+    		 for(Cookie c :cookies )
+        	 {
+        		 if(c.getName().equals("token"))
+        		 {
+        			 authorizationHeader=c.getValue();
+        		 }
+        	 }
     	 }
+    	 
        
       //  (String) httpServletRequest.getAttribute("token");
 

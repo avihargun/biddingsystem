@@ -12,31 +12,42 @@ public class bid {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int bidno;
+	private long bidno;
 	private long eventNo;
-	private long categoryNo;
+	private long itemId;
 	private LocalTime bidTime;
 	private String bidderEmail;
 	private int bidValue;
 	
 	
+	
+	public long getItemId() {
+		return itemId;
+	}
+
+
+	public void setItemId(long itemId) {
+		this.itemId = itemId;
+	}
+
+
 	public bid() {
 		super();
 	}
 
 
-	public bid(int bidno, long eventNo, long categoryNo, LocalTime bidTime, String bidderEmail, int bidValue) {
+	public bid(int bidno, long eventNo, long itemId, LocalTime bidTime, String bidderEmail, int bidValue) {
 		super();
 		this.bidno = bidno;
 		this.eventNo = eventNo;
-		this.categoryNo = categoryNo;
+		this.itemId = itemId;
 		this.bidTime = bidTime;
 		this.bidderEmail = bidderEmail;
 		this.bidValue = bidValue;
 	}
 
 
-	public int getBidno() {
+	public long getBidno() {
 		return bidno;
 	}
 
@@ -56,14 +67,6 @@ public class bid {
 	}
 
 
-	public long getCategoryNo() {
-		return categoryNo;
-	}
-
-
-	public void setCategoryNo(long categoryNo) {
-		this.categoryNo = categoryNo;
-	}
 
 
 	public LocalTime getBidTime() {

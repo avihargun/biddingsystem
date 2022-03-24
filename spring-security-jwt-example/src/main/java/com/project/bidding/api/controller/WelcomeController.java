@@ -193,7 +193,7 @@ public class WelcomeController {
 			} catch (IOException e) {
 
 				e.printStackTrace();
-			}
+				}
 
 			auction.setImageName(filename1);
 			String authorizationHeader = null;

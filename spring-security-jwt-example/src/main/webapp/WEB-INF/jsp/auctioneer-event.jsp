@@ -78,12 +78,12 @@
 
                                                         <div class="input-group">
 
-                                                            <input type="text" value="${c.itemStartBid}" id="bid-value"
+                                                            <input type="text" value="${c.itemStartBid}" id="${c.itemId}t"
                                                                 autofocus class="form-control">
 
                                                             <div class="input-group-append">
 
-                                                                <button class="btn btn-success" id="bid">Start
+                                                                <button class="btn btn-success" id="${c.itemId}" onClick="trigger(this.id)">Start
                                                                     Bid</button>
 
                                                             </div>
