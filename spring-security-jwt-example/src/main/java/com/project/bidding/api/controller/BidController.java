@@ -40,23 +40,14 @@ public class BidController {
 	  }  
 	
 	@MessageMapping("/hello1")
-	  @SendTo("/bid/placedbid")      
-	  public ReturnBid set(bid message,HttpServletRequest httpServletRequest) throws Exception {
+	  @SendTo("/bid/placebid")      
+	  public bid set(bid message) throws Exception {
+		System.out.println("in hello1"); 
 //	    Thread.sleep(1000); // simulated delay
 		message.setBidTime(LocalTime.now());
-		String authorizationHeader = null;
-		Cookie[] cookies=httpServletRequest.getCookies();
 		
-		for(Cookie c :cookies )
-		{
-			if(c.getName().equals("token"))
-			{
-				authorizationHeader=c.getValue();
-			}
-		}
-		message.setBidderEmail(jwtUtil.extractUsername(authorizationHeader));
 		//bidRepository.save(message);
-	    return new ReturnBid(message.getBidValue(), message.getItemId());
+	    return new bid(message.getBidValue(), message.getItemId(),message.getBidderEmail());
 	  }  
 	
 	@RequestMapping(value="/auctionhouse/bid" , method=RequestMethod.GET)
@@ -73,7 +64,7 @@ public class BidController {
 	
 	 //------------------live auction ------------
     @RequestMapping(value="/bidder/live-auction/{eventNo}" , method=RequestMethod.GET)
-    public String liveAuctionPost(@PathVariable("eventNo") long eventNo, Model model) {
+    public String liveAuctionPost(@PathVariable("eventNo") long eventNo, Model model,HttpServletRequest httpServletRequest) {
 
     	
     	
@@ -81,6 +72,17 @@ public class BidController {
     	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
     	model.addAttribute("catalog", a.getItems());
     	model.addAttribute("eventNo",eventNo);
+    	String authorizationHeader = null;
+		Cookie[] cookies=httpServletRequest.getCookies();
+		
+		for(Cookie c :cookies )
+		{
+			if(c.getName().equals("token"))
+			{
+				authorizationHeader=c.getValue();
+			}
+		}
+		model.addAttribute("bidderEmail",jwtUtil.extractUsername(authorizationHeader));
     	//model.addAttribute("bidderId", a);
     	
     	

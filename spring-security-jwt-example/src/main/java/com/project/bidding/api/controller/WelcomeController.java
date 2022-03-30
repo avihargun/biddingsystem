@@ -270,6 +270,7 @@ public class WelcomeController {
 		System.out.println(jwtUtil.generateToken(authRequest.getUserName()));
 
 		Cookie cookie = new Cookie("token",jwtUtil.generateToken(authRequest.getUserName()));
+		cookie.setMaxAge(60 * 60 * 10);
 		response.addCookie(cookie);
 		// HttpSession session = request.getSession();
 		// session.setAttribute("token", jwtUtil.generateToken(authRequest.getUserName()));

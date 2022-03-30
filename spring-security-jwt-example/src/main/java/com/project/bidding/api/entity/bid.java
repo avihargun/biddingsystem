@@ -36,6 +36,14 @@ public class bid {
 	}
 
 
+	public bid(int bidValue,long itemId,String bidderEmail) {
+		super();
+		this.itemId = itemId;
+		this.bidderEmail = bidderEmail;
+		this.bidValue = bidValue;
+	}
+
+
 	public bid(int bidno, long eventNo, long itemId, LocalTime bidTime, String bidderEmail, int bidValue) {
 		super();
 		this.bidno = bidno;

@@ -9,7 +9,7 @@ var stompClient = null;
         });
         
         stompClient.subscribe('/bid/placebid', function (showbid) {
-            showBid(JSON.parse(bid.body));
+            showBid(JSON.parse(showbid.body));
         });
     });         
 
@@ -20,15 +20,34 @@ function sendName() {
 }         
 
 function showGreeting(message) {
-	
 	var b_id="#"+ message.itemId+"b";
+	setTimeout(()=>{
+		$(b_id).html("bid completed")
+	},10000)
+	
 	//console.log("greetings",b_id);
     $(b_id).html(message.rbid);
 }
  
 function showBid(showbid)
 {
-	console.log("showbid",showbid.bidderEmail);
+	console.log("showbid",showbid.bidderEmail,$("#b_id").val());
+	var div_id="#"+showbid.itemId+"c";
+	$(div_id).text("highbid:"+showbid.bidValue+" by " + showbid.bidderEmail );
+	var bu_id="#"+ showbid.itemId+"b";
+	var newbid=showbid.bidValue + 10;
+    $(bu_id).html(newbid);
+    
+	if($("#b_id").val()==showbid.bidderEmail)
+	{
+
+    	$(bu_id).prop('disabled',true);
+	}
+	else
+	{
+		$(bu_id).prop('disabled',false);
+	}
+	
 }
 function trigger(id)
 {
@@ -39,10 +58,10 @@ function trigger(id)
 	
 }
 
-function highbid(id,eno,bidvalue)
+function highbid(id,eno,bidvalue,bidderemail)
 {
-	console.log("itemid",id,"eno",eno,"bidvalue",bidvalue);
-	//stompClient.send("/app/hello1", {}, JSON.stringify({'bidValue': value, 'itemId':id,'eventNo':eno}));
+	//console.log("itemid",id,"eno",eno,"bidvalue",bidvalue,"bidderemail",bidderemail);
+	stompClient.send("/app/hello1", {}, JSON.stringify({'bidValue': bidvalue, 'itemId':id,'eventNo':eno,'bidderEmail':bidderemail}));
 	
 }
 

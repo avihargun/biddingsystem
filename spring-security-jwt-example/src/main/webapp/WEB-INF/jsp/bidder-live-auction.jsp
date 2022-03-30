@@ -33,7 +33,7 @@
       
 
 
-
+    <input type="hidden" id="b_id" value="${bidderEmail}">
       <section>
         <div class="tabs">
             <ul class="tab-links">
@@ -81,7 +81,7 @@
                         
             
                         
-                                                <button class="btn btn-success" id="${c.itemId}b" onClick="highbid(`${c.itemId}`,`${eventNo}`,this.html)">Start Bid</button>
+                                                <button class="btn btn-success" id="${c.itemId}b" onClick="highbid(`${c.itemId}`,`${eventNo}`,this.innerHTML,`${bidderEmail}`)">Start Bid</button>
                         
                                             
                         
