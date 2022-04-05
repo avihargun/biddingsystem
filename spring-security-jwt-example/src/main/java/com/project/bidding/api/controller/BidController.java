@@ -53,7 +53,7 @@ public class BidController {
 //	    Thread.sleep(1000); // simulated delay
 		message.setBidTime(LocalTime.now());
 		
-		//bidRepository.save(message);
+		bidRepository.save(message);
 	    return new bid(message.getBidValue(), message.getItemId(),message.getBidderEmail());
 	  }  
 	
