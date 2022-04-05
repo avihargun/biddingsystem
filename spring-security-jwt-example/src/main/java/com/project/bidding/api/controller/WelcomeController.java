@@ -323,6 +323,7 @@ public class WelcomeController {
     	model.addAttribute("items", auctionRepository.findByeventNo(eventNo));//items will have the list of items so will hagve to implement foreeach lopp in jsp page
     	Auction a = (Auction) auctionRepository.findByeventNo(eventNo);
     	model.addAttribute("catalog", a.getItems());
+    	model.addAttribute("eventNo",eventNo);
     	return "auctioneer-event";
     }
 

@@ -72,8 +72,16 @@
                                             <div class="container-fluid">
 
                                                 <div class="row">
-
+                                                    <div>
+                                                    <small id="${c.itemId}auction" class="text-muted"></small> 
+                                                    </div>
+                                                    <div class="input-group">
+                                                    <button  class="btn btn-success" id="winbid" onClick="finish(`${c.itemId}`,`${eventNo}`,`${c.itemId}`)" style="display:none" >Accept</button>
+                                                    </div>
                                                     <div class="offset-md-8">
+                                                        
+
+                                                        
 
 
                                                         <div class="input-group">
